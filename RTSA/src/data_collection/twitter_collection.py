@@ -17,9 +17,14 @@ api = tweepy.API(auth)
 
 class StreamListener(tweepy.Stream):
     def on_status(self, status):
-        print(status.text)
-        with open('../../data/raw/tweets.json', 'a') as f:
-            json.dump(status._json, f)
+        tweet_data = {
+            'tweet': status.text,
+            'username': status.user.screen_name,
+            'followers_count': status.user.followers_count,
+            'retweet_count': status.retweet_count
+        }
+        with open('../../data/raw/tweets_with_user_data.json', 'a') as f:
+            json.dump(tweet_data, f)
             f.write('\n')
 
 
