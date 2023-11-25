@@ -1,4 +1,5 @@
 # Real-time-Sentiment-Analysis
+
 Tracking K-Pop Sentiment on Twitter
 
 1. Data Collection
@@ -20,7 +21,9 @@ Tracking K-Pop Sentiment on Twitter
 ## Additional Analysis
 
 ### Topic Modeling (LDA - 5 topics)
+
 Discover the main topics discussed in K-Pop tweets
 
 ### Influencer Identification
+
 Identify key influencers in K-Pop discussions on Twitter
