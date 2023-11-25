@@ -2,7 +2,10 @@ import tweepy
 import json
 
 # Twitter credentials
-
+consumer_key = '***REMOVED***'
+consumer_secret = '***REMOVED***'
+access_token = '***REMOVED***'
+access_token_secret = '***REMOVED***'
 
 # Authenticate
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -21,9 +24,10 @@ class StreamListener(tweepy.Stream):
 
 
 # Keywords
-keywords = ['#KPop', '#BTS', '#Blackpink']
+keywords = ['#KPop', '#LESSERAFIM', '#IVE', '#NEWJEANS',
+            '#AESPA', '#NMIXX', '#ITZY', '#fromis_9']
 
 # Streaming
-stream_listener = StreamListener(consumer_key, consumer_secret,
-                                 access_token, access_token_secret)
+stream_listener = StreamListener(
+    consumer_key, consumer_secret, access_token, access_token_secret)
 stream_listener.filter(track=keywords)
