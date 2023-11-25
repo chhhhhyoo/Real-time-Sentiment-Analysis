@@ -3,12 +3,12 @@ import matplotlib.pyplot as plt
 
 # Load sentiment data
 with open('../../data/processed/sentiments.json', 'r') as f:
-    sentiments = json.load(f)
+    data = json.load(f)
 
 # Extract sentiment scores
-negatives = [s['neg'] for s in sentiments]
-positives = [s['pos'] for s in sentiments]
-neutrals = [s['neu'] for s in sentiments]
+negatives = [item['sentiment']['neg'] for item in data]
+positives = [item['sentiment']['pos'] for item in data]
+neutrals = [item['sentiment']['neu'] for item in data]
 
 # Plotting
 plt.plot(negatives, label='Negative', color='red')

@@ -7,6 +7,7 @@ with open('../../data/processed/cleaned_tweets.json', 'r') as file:
     data = json.load(file)
 
 # Prepare the text data
+text_data = [item['tweet'] for item in data]
 vectorizer = CountVectorizer(max_df=0.95, min_df=2, stop_words='english')
 dtm = vectorizer.fit_transform(data)
 

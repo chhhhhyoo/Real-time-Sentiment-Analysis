@@ -23,7 +23,7 @@ class StreamListener(tweepy.Stream):
             'followers_count': status.user.followers_count,
             'retweet_count': status.retweet_count
         }
-        with open('../../data/raw/tweets_with_user_data.json', 'a') as f:
+        with open('../../data/raw/tweet_data.json', 'a') as f:
             json.dump(tweet_data, f)
             f.write('\n')
 

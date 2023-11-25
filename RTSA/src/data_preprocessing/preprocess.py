@@ -35,13 +35,14 @@ def clean_text(text):
 
 
 # Load and clean tweets
-cleaned_tweets = []
-with open('../../data/raw/tweets.json', 'r') as f:
-    for line in f:
-        tweet = json.loads(line)
-        cleaned_text = clean_text(tweet['text'])
-        cleaned_tweets.append(cleaned_text)
+cleaned_tweet_data = []
+with open('../../data/raw/tweet_data.json', 'r') as file:
+    for line in file:
+        tweet_data = json.loads(line)
+        cleaned_text = clean_text(tweet_data['tweet'])
+        tweet_data['tweet'] = cleaned_text
+        cleaned_tweet_data.append(tweet_data)
 
 # Save cleaned tweets
-with open('../../data/processed/cleaned_tweets.json', 'w') as f:
-    json.dump(cleaned_tweets, f)
+with open('../../data/processed/cleaned_tweets_data.json', 'w') as file:
+    json.dump(cleaned_tweet_data, file)

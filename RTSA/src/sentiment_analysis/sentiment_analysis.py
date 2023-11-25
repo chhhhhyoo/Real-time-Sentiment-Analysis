@@ -6,12 +6,13 @@ nltk.download('vader_lexicon')
 sia = SentimentIntensityAnalyzer()
 
 # Load cleaned tweets
-with open('../../data/processed/cleaned_tweets.json', 'r') as f:
+with open('../../data/processed/cleaned_tweets_data.json', 'r') as f:
     cleaned_tweets = json.load(f)
 
 # Sentiment analysis
-sentiments = [sia.polarity_scores(tweet) for tweet in cleaned_tweets]
-
+for item in cleaned_tweets:
+    sentiment = sia.polarity_scores(item['tweet'])
+    item['sentiment'] = sentiment
 # Save sentiments
 with open('../../data/processed/sentiments.json', 'w') as f:
-    json.dump(sentiments, f)
+    json.dump(cleaned_tweets, f)
