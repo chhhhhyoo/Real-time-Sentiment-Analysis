@@ -1,43 +1,45 @@
 import tweepy
 import json
 
-# Bearer Token
-bearer_token = '***REMOVED***'
+# Twitter credentials
+consumer_key = 'ENTER HERE'
+consumer_secret = 'ENTER HERE'
+access_token = 'ENTER HERE'
+access_token_secret = 'ENTER HERE'
 
-# Define the Stream Listener
+# Authenticate
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
+print(api.rate_limit_status())
+
+# Listener Class
 
 
-class CustomStreamListener(tweepy.StreamingClient):
-    def on_tweet(self, tweet):
-        print("Received a tweet!")
+class StreamListener(tweepy.StreamListener):
+    def on_status(self, status):
+        print("collection successful")
+        tweet_data = {
+            'tweet': status.text,
+            'username': status.user.screen_name,
+            'followers_count': status.user.followers_count,
+            'retweet_count': status.retweet_count
+        }
         try:
-            # Fetch user details
-            user_data = client.get_user(id=tweet.author_id).data
-
-            tweet_data = {
-                'tweet': tweet.text,
-                'author_id': tweet.author_id,
-                'username': user_data.username,
-                'followers_count': user_data.public_metrics['followers_count']
-            }
-
-            with open('../../data/raw/tweet_data.json', 'a') as f:
+            with open('../data/raw/tweet_data.json', 'a') as f:
                 json.dump(tweet_data, f)
                 f.write('\n')
         except Exception as e:
-            print(f"Error in on_tweet: {e}")
+            print(f"Error in on_status: {e}")
 
 
-# Initialize Stream
-stream_listener = CustomStreamListener(bearer_token=bearer_token)
+# Create StreamListener instance
+stream_listener = StreamListener()
+stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
 
 # Keywords
 keywords = ['#KPop', '#LESSERAFIM', '#IVE', '#NEWJEANS',
             '#AESPA', '#NMIXX', '#ITZY', '#fromis_9']
 
-# Add rules for each keyword
-for keyword in keywords:
-    stream_listener.add_rules(tweepy.StreamRule(keyword))
-
 # Start streaming
-stream_listener.filter()
+stream.filter(track=keywords)
